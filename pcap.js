@@ -396,6 +396,9 @@ decode.ieee802_11_frame = function (raw_packet, offset) {
     ret.dhost = unpack.ethernet_addr(raw_packet, offset); offset += 6;
     ret.fragSeq = unpack.uint16_be(raw_packet, offset); offset += 2;
 
+	var strength = raw_packet[22];
+    ret.strength = -Math.abs(265 - strength);
+
     switch(ret.subType) {
         case 8: // QoS Data
             ret.qosPriority = raw_packet[offset++];
